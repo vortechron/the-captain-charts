@@ -3,9 +3,9 @@ entries:
   golang:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-05-18T01:59:04.65804+08:00"
+    created: "2025-05-18T02:07:01.119535+08:00"
     description: A Helm chart for Golang applications
-    digest: e69fa9ca5742db8bef85d72d001365fac282c42a37f07c93c29ed43eb1529727
+    digest: 63e0219532176729f395607e334d7334068e49a7f34fbf87f03af49b83c31bf2
     home: https://github.com/vortechron/the-captain-charts
     icon: https://go.dev/images/go-logo-blue.svg
     keywords:
@@ -26,9 +26,9 @@ entries:
   laravel:
   - apiVersion: v2
     appVersion: 8.0.0
-    created: "2025-05-18T01:59:04.659401+08:00"
+    created: "2025-05-18T02:07:01.12058+08:00"
     description: Helm chart scaffolding for Laravel applications.
-    digest: 1e5a59c16088975eb403f0d7bcb7c0de2a6118d0d61d473ddde51587db0c2c34
+    digest: c0ef700d082d4e2036a495104666f39a2080be2a4294aed55f6ba866785adfc6
     name: laravel
     type: application
     urls:
@@ -37,9 +37,9 @@ entries:
   laravel-octane:
   - apiVersion: v2
     appVersion: 8.0.0
-    created: "2025-05-18T01:59:04.660224+08:00"
+    created: "2025-05-18T02:07:01.121292+08:00"
     description: Helm chart scaffolding for Octane-based Laravel applications.
-    digest: c55f9e0f3586725b5c57673178e1df9e099cd1b56e10c31afade9ec676d32c92
+    digest: 69f0c18f0440140f68d9c624fe6e1342d5ef280e4da4fb789f08345bfab51813
     name: laravel-octane
     type: application
     urls:
@@ -48,12 +48,12 @@ entries:
   laravel-worker:
   - apiVersion: v2
     appVersion: 8.0.0
-    created: "2025-05-18T01:59:04.660964+08:00"
+    created: "2025-05-18T02:07:01.121886+08:00"
     description: Helm chart scaffolding for additional Laravel worker applications.
-    digest: bcd31a724deb29d823c37f53bd38b373a79e43b7424838f19988249ddf075d8d
+    digest: 4fb2ac6925feb727e4531533205b3540216039cfbc88157603f8defde494ca79
     name: laravel-worker
     type: application
     urls:
     - laravel-worker-1.0.0.tgz
     version: 1.0.0
-generated: "2025-05-18T01:59:04.656657+08:00"
+generated: "2025-05-18T02:07:01.118445+08:00"
