@@ -3,9 +3,9 @@ entries:
   golang:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-05-18T02:07:01.119535+08:00"
+    created: "2025-05-18T13:59:53.232636+08:00"
     description: A Helm chart for Golang applications
-    digest: 63e0219532176729f395607e334d7334068e49a7f34fbf87f03af49b83c31bf2
+    digest: 8fdffda2ab30058937317526c0bb99c3ce6643221efa54dd6cb4d8357b5c1707
     home: https://github.com/vortechron/the-captain-charts
     icon: https://go.dev/images/go-logo-blue.svg
     keywords:
@@ -26,9 +26,9 @@ entries:
   laravel:
   - apiVersion: v2
     appVersion: 8.0.0
-    created: "2025-05-18T02:07:01.12058+08:00"
+    created: "2025-05-18T13:59:53.233119+08:00"
     description: Helm chart scaffolding for Laravel applications.
-    digest: c0ef700d082d4e2036a495104666f39a2080be2a4294aed55f6ba866785adfc6
+    digest: e1cab63503145e42845a1fcc3db3c64fede77e7740979ded8b5e1dafa0ada290
     name: laravel
     type: application
     urls:
@@ -37,9 +37,9 @@ entries:
   laravel-octane:
   - apiVersion: v2
     appVersion: 8.0.0
-    created: "2025-05-18T02:07:01.121292+08:00"
+    created: "2025-05-18T13:59:53.233835+08:00"
     description: Helm chart scaffolding for Octane-based Laravel applications.
-    digest: 69f0c18f0440140f68d9c624fe6e1342d5ef280e4da4fb789f08345bfab51813
+    digest: 7b11e1e5a32868b1947aaf53eecb8ff533c24791289838208dcaf3d321453895
     name: laravel-octane
     type: application
     urls:
@@ -48,12 +48,12 @@ entries:
   laravel-worker:
   - apiVersion: v2
     appVersion: 8.0.0
-    created: "2025-05-18T02:07:01.121886+08:00"
+    created: "2025-05-18T13:59:53.234422+08:00"
     description: Helm chart scaffolding for additional Laravel worker applications.
-    digest: 4fb2ac6925feb727e4531533205b3540216039cfbc88157603f8defde494ca79
+    digest: 77281d57e2572c36ba742b3ff62c20f16d4bf941c719259d751b7f23b4801462
     name: laravel-worker
     type: application
     urls:
     - laravel-worker-1.0.0.tgz
     version: 1.0.0
-generated: "2025-05-18T02:07:01.118445+08:00"
+generated: "2025-05-18T13:59:53.231906+08:00"
