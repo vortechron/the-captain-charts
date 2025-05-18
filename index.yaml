@@ -3,9 +3,9 @@ entries:
   golang:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-05-18T13:59:53.232636+08:00"
+    created: "2025-05-18T14:00:27.544483+08:00"
     description: A Helm chart for Golang applications
-    digest: 8fdffda2ab30058937317526c0bb99c3ce6643221efa54dd6cb4d8357b5c1707
+    digest: 992ab22cfed89df0e728fabe24468b727081f91a576c525f87f66fb244b83cdf
     home: https://github.com/vortechron/the-captain-charts
     icon: https://go.dev/images/go-logo-blue.svg
     keywords:
@@ -26,9 +26,9 @@ entries:
   laravel:
   - apiVersion: v2
     appVersion: 8.0.0
-    created: "2025-05-18T13:59:53.233119+08:00"
+    created: "2025-05-18T14:00:27.545034+08:00"
     description: Helm chart scaffolding for Laravel applications.
-    digest: e1cab63503145e42845a1fcc3db3c64fede77e7740979ded8b5e1dafa0ada290
+    digest: a3405d1bad02f65ccc989908dba88667019aa38a8aed212891ab3b1038608bcd
     name: laravel
     type: application
     urls:
@@ -37,9 +37,9 @@ entries:
   laravel-octane:
   - apiVersion: v2
     appVersion: 8.0.0
-    created: "2025-05-18T13:59:53.233835+08:00"
+    created: "2025-05-18T14:00:27.545802+08:00"
     description: Helm chart scaffolding for Octane-based Laravel applications.
-    digest: 7b11e1e5a32868b1947aaf53eecb8ff533c24791289838208dcaf3d321453895
+    digest: 879e4fcc9a7668f77c227553bfb27e186541449140590a317bad56399d7cfe2f
     name: laravel-octane
     type: application
     urls:
@@ -48,12 +48,12 @@ entries:
   laravel-worker:
   - apiVersion: v2
     appVersion: 8.0.0
-    created: "2025-05-18T13:59:53.234422+08:00"
+    created: "2025-05-18T14:00:27.546445+08:00"
     description: Helm chart scaffolding for additional Laravel worker applications.
-    digest: 77281d57e2572c36ba742b3ff62c20f16d4bf941c719259d751b7f23b4801462
+    digest: 5ed52fd61e1dbcedc7ba0d5cd12e5a196559e3a13774d40626c506f29f317511
     name: laravel-worker
     type: application
     urls:
     - laravel-worker-1.0.0.tgz
     version: 1.0.0
-generated: "2025-05-18T13:59:53.231906+08:00"
+generated: "2025-05-18T14:00:27.543411+08:00"
