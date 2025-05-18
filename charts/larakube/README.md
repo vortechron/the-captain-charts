@@ -4,6 +4,7 @@
     - [📜 Environment variables](#-environment-variables)
     - [🔄 Database Migrations](#-database-migrations)
     - [🤖 Run workers (non-HTTP workload)](#-run-workers-non-http-workload)
+    - [🔄 Nginx Integration](#-nginx-integration)
   - [📡 Monitoring](#-monitoring)
     - [🔥 Scraping PHP-FPM and NGINX Metrics](#-scraping-php-fpm-and-nginx-metrics)
     - [❤ Healthchecks](#-healthchecks)
@@ -122,6 +123,27 @@ migration:
 ```
 
 The migration job uses the same image as your application and runs before the application is deployed. You can customize the command, resources, and other settings in the `migration` section of your values file.
+
+### 🔄 Nginx Integration
+
+The chart includes support for deploying Nginx as a reverse proxy in front of your Laravel application. This is disabled by default but can be enabled by setting `nginx.enabled` to `true` in your values file.
+
+```yaml
+nginx:
+  enabled: true
+  service:
+    type: ClusterIP
+    port: 80
+```
+
+When Nginx is enabled, the chart will deploy an Nginx pod configured as a reverse proxy that forwards requests to your Laravel application. This can be useful for scenarios where you need additional features provided by Nginx, such as:
+
+- SSL termination
+- Load balancing
+- Advanced caching
+- Request filtering and security
+
+You can customize the Nginx configuration through the `nginx.config.custom` value, which allows you to provide a custom Nginx configuration that will be mounted into the Nginx container.
 
 ### 🤖 Run workers (non-HTTP workload)
 

@@ -269,6 +269,68 @@ web:
     #  - domain: www.some-site.test
     domainRedirects: []
 
+# -- Nginx configuration for acting as a reverse proxy in front of the web service.
+nginx:
+  # -- Enable or disable the Nginx deployment and service.
+  enabled: false
+  
+  # -- The number of replicas for the Nginx deployment.
+  replicaCount: 1
+  
+  # -- The image repository for Nginx.
+  image:
+    repository: nginx
+    tag: stable
+    pullPolicy: IfNotPresent
+  
+  # -- Service configuration for Nginx.
+  service:
+    type: ClusterIP
+    port: 80
+    annotations: {}
+  
+  # -- Resource requests and limits for the Nginx container.
+  resources: {}
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+  
+  # -- Configuration for Nginx.
+  config:
+    # -- Custom Nginx configuration for the reverse proxy.
+    custom: |
+      server {
+        listen 80;
+        server_name _;
+        
+        location / {
+          proxy_pass http://{{ include "larakube.fullname" . }}-web:{{ .Values.service.port }};
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+        }
+      }
+  
+  # -- Liveness probe configuration for the Nginx container.
+  livenessProbe:
+    httpGet:
+      path: /
+      port: 80
+    initialDelaySeconds: 30
+    timeoutSeconds: 5
+  
+  # -- Readiness probe configuration for the Nginx container.
+  readinessProbe:
+    httpGet:
+      path: /
+      port: 80
+    initialDelaySeconds: 5
+    timeoutSeconds: 3
+
 # -- Worker deployment configuration.
 worker:
   default:

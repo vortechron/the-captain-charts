@@ -49,12 +49,12 @@ spec:
             backend:
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
-                name: {{ $fullName }}-web
+                name: {{ if $.Values.nginx.enabled }}{{ $fullName }}-nginx{{ else }}{{ $fullName }}-web{{ end }}
                 port:
-                  number: {{ $svcPort }}
+                  number: {{ if $.Values.nginx.enabled }}{{ $.Values.nginx.service.port }}{{ else }}{{ $svcPort }}{{ end }}
               {{- else }}
-              serviceName: {{ $fullName }}-web
-              servicePort: {{ $svcPort }}
+              serviceName: {{ if $.Values.nginx.enabled }}{{ $fullName }}-nginx{{ else }}{{ $fullName }}-web{{ end }}
+              servicePort: {{ if $.Values.nginx.enabled }}{{ $.Values.nginx.service.port }}{{ else }}{{ $svcPort }}{{ end }}
               {{- end }}
           {{- end }}
     {{- end }}
