@@ -3,9 +3,9 @@ entries:
   golang:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-05-18T15:42:09.519178+08:00"
+    created: "2025-05-21T00:38:52.443185+08:00"
     description: A Helm chart for Golang applications
-    digest: c52c2d4c3554bcc9b5dc8bdb1ef0e063d06140526f4c2b166d0cb959443978cf
+    digest: 0caa5fc5349288fdd24e1151f42c58613db6ee7864902b9b2fb078acd0a60986
     home: https://github.com/vortechron/the-captain-charts
     icon: https://go.dev/images/go-logo-blue.svg
     keywords:
@@ -26,9 +26,9 @@ entries:
   larakube:
   - apiVersion: v2
     appVersion: 8.0.0
-    created: "2025-05-18T15:42:09.519768+08:00"
+    created: "2025-05-21T00:38:52.444544+08:00"
     description: Helm chart scaffolding for Laravel applications.
-    digest: a01a91fde1953df32bed6bff8deaf9e889d771b11ee2a910983776df6cc32c92
+    digest: 040f77a14e5dd893ff72ac9b9386870ec2902634d1cc7bed22ef6fab61b261f0
     name: larakube
     type: application
     urls:
@@ -37,7 +37,7 @@ entries:
   laravel:
   - apiVersion: v2
     appVersion: 8.0.0
-    created: "2025-05-18T15:42:09.520459+08:00"
+    created: "2025-05-21T00:38:52.445181+08:00"
     description: Helm chart scaffolding for Laravel applications.
     digest: a3405d1bad02f65ccc989908dba88667019aa38a8aed212891ab3b1038608bcd
     name: laravel
@@ -48,9 +48,9 @@ entries:
   laravel-octane:
   - apiVersion: v2
     appVersion: 8.0.0
-    created: "2025-05-18T15:42:09.522054+08:00"
+    created: "2025-05-21T00:38:52.44592+08:00"
     description: Helm chart scaffolding for Octane-based Laravel applications.
-    digest: b1ed67f0ece97c78c67923695b7126d3a7a1f8006fc1e690330c6d17191f2a18
+    digest: 9452973f72e7ce7d927d934c9798309beb93fc6fda833e258c634edb3d0302f0
     name: laravel-octane
     type: application
     urls:
@@ -59,12 +59,12 @@ entries:
   laravel-worker:
   - apiVersion: v2
     appVersion: 8.0.0
-    created: "2025-05-18T15:42:09.522726+08:00"
+    created: "2025-05-21T00:38:52.446511+08:00"
     description: Helm chart scaffolding for additional Laravel worker applications.
-    digest: b65854e697933439b3ee7b13b154e497ee844185671221cdd5de7a301751b615
+    digest: a0b48d05870e0ec639f8b51d4fa36216edc7778e8a0b18213ee121156c4a3628
     name: laravel-worker
     type: application
     urls:
     - laravel-worker-1.0.0.tgz
     version: 1.0.0
-generated: "2025-05-18T15:42:09.517829+08:00"
+generated: "2025-05-21T00:38:52.442155+08:00"
