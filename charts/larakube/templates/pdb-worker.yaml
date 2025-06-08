@@ -1,5 +1,5 @@
 {{- range $i, $value := .Values.worker }}
-{{- if $value.pdb.enabled }}
+{{- if and $value.enabled $value.pdb.enabled }}
 ---
 apiVersion: policy/v1
 kind: PodDisruptionBudget

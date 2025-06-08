@@ -132,6 +132,67 @@ env: {}
 # -- Secret environment variables to set in the container.
 secretEnvs: []
 
+# -- WebSocket server configuration for real-time communication.
+websocket:
+  # -- Enable or disable the WebSocket server.
+  enabled: false
+
+  # -- WebSocket server application credentials.
+  app:
+    # -- Application ID for WebSocket authentication.
+    id: "my-app-id"
+    # -- Application key for WebSocket authentication.
+    key: "my-app-key"
+    # -- Application secret for WebSocket authentication.
+    secret: "my-app-secret"
+
+  # -- Host and port configuration for the WebSocket server.
+  server:
+    # -- Host for the WebSocket server to bind to.
+    host: "0.0.0.0"
+    # -- Port for the WebSocket server to listen on.
+    port: 8080
+
+  # -- Allowed origins for WebSocket connections (use '*' for all origins).
+  allowedOrigins:
+    - "*"
+
+  # -- Service configuration for the WebSocket server.
+  service:
+    # -- The type of service for WebSocket server.
+    type: ClusterIP
+    # -- The port on which the WebSocket service will be exposed.
+    port: 8080
+    # -- Annotations to add to the WebSocket service.
+    annotations: {}
+
+  # -- Ingress configuration for WebSocket connections.
+  ingress:
+    # -- Enable or disable the WebSocket ingress.
+    enabled: false
+    # -- The ingress class name for WebSocket.
+    className: ""
+    # -- Annotations specific to WebSocket ingress (includes WebSocket upgrade headers).
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+      nginx.ingress.kubernetes.io/websocket-services: ""
+    # -- The hostname for WebSocket connections.
+    hosts:
+      - host: ws-chart-example.local
+        paths:
+          - path: /app
+            pathType: ImplementationSpecific
+          - path: /apps
+            pathType: ImplementationSpecific
+    # -- TLS configuration for WebSocket ingress.
+    tls: []
+
+  # -- Scaling configuration for horizontal scaling with Redis.
+  scaling:
+    # -- Enable horizontal scaling with Redis pub/sub.
+    enabled: false
+
 # -- Web deployment configuration.
 web:
 
@@ -333,10 +394,95 @@ nginx:
 
 # -- Worker deployment configuration.
 worker:
+  # -- WebSocket server worker configuration.
+  websocket:
+    # -- Enable or disable the WebSocket worker.
+    enabled: false
+
+    # -- The number of replicas for the WebSocket worker deployment.
+    replicaCount: 1
+
+    # -- Command to start the WebSocket server.
+    command:
+      - php
+      - artisan
+      - reverb:start
+      - --host={{ .Values.websocket.server.host }}
+      - --port={{ .Values.websocket.server.port }}
+
+    # -- Environment variables specific to the WebSocket worker.
+    env:
+      REVERB_APP_ID: "{{ .Values.websocket.app.id }}"
+      REVERB_APP_KEY: "{{ .Values.websocket.app.key }}"
+      REVERB_APP_SECRET: "{{ .Values.websocket.app.secret }}"
+      REVERB_HOST: "{{ .Values.websocket.server.host }}"
+      REVERB_PORT: "{{ .Values.websocket.server.port }}"
+      REVERB_SCHEME: "http"
+
+    # -- Container port for WebSocket server.
+    containerPort: 8080
+
+    # -- Autoscaling configuration for the WebSocket worker.
+    autoscaling:
+      # -- Enable or disable autoscaling for the WebSocket worker.
+      enabled: false
+      # -- The minimum number of replicas for autoscaling.
+      minReplicas: 1
+      # -- The maximum number of replicas for autoscaling.
+      maxReplicas: 10
+      # -- The target CPU utilization percentage for autoscaling.
+      targetCPUUtilizationPercentage: 80
+
+    # -- Resource requests and limits for the WebSocket worker.
+    resources: {}
+      # limits:
+      #   cpu: 500m
+      #   memory: 512Mi
+      # requests:
+      #   cpu: 250m
+      #   memory: 256Mi
+
+    # -- Update strategy for the WebSocket worker.
+    updateStrategy:
+      # -- The update strategy type (RollingUpdate recommended for WebSocket).
+      type: RollingUpdate
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 0
+
+    # -- Liveness probe configuration for the WebSocket worker.
+    livenessProbe:
+      tcpSocket:
+        port: 8080
+      initialDelaySeconds: 30
+      periodSeconds: 10
+
+    # -- Readiness probe configuration for the WebSocket worker.
+    readinessProbe:
+      tcpSocket:
+        port: 8080
+      initialDelaySeconds: 5
+      periodSeconds: 5
+
+    # -- PodDisruptionBudget configuration for the WebSocket worker.
+    pdb:
+      # -- Enable or disable the PodDisruptionBudget for the WebSocket worker.
+      enabled: false
+      # -- The maximum number of pods that can be unavailable during a disruption.
+      maxUnavailable: 0
+
   default:
+    # -- Enable or disable the default worker.
+    enabled: false
 
     # -- The number of replicas for the worker deployment.
     replicaCount: 1
+
+    # -- Command to run for the default worker.
+    command:
+      - php
+      - artisan
+      - queue:work
 
     # -- Autoscaling configuration for the worker deployment.
     autoscaling:

@@ -1,4 +1,5 @@
 {{- range $i, $value := .Values.worker }}
+{{- if $value.enabled }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -48,6 +49,12 @@ spec:
           command:
             {{- toYaml $value.command | nindent 12 }}
           {{- end }}
+          {{- if $value.containerPort }}
+          ports:
+            - name: websocket
+              containerPort: {{ $value.containerPort }}
+              protocol: TCP
+          {{- end }}
           env:
             # TODO: check if there are any envs
             {{- range $key, $value := $value.env }}
@@ -64,10 +71,14 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ include "larakube.fullname" $ }}-env
-          #livenessProbe: TODO
-          #  { {- toYaml $value.livenessProbe | nindent 12 }}
-          #readinessProbe:
-          #  { {- toYaml $value.readinessProbe | nindent 12 }}
+          {{- with $value.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with $value.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           resources:
             {{- toYaml $value.resources | nindent 12 }}
           {{- with $.Values.volumeMounts }}
@@ -90,4 +101,5 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+{{- end }}
 {{- end }}

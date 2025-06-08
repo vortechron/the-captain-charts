@@ -4,6 +4,7 @@
     - [📜 Environment variables](#-environment-variables)
     - [🔄 Database Migrations](#-database-migrations)
     - [🤖 Run workers (non-HTTP workload)](#-run-workers-non-http-workload)
+    - [🌐 WebSocket Server Support](#-websocket-server-support)
     - [🔄 Nginx Integration](#-nginx-integration)
   - [📡 Monitoring](#-monitoring)
     - [🔥 Scraping PHP-FPM and NGINX Metrics](#-scraping-php-fpm-and-nginx-metrics)
@@ -150,6 +151,72 @@ You can customize the Nginx configuration through the `nginx.config.custom` valu
 Workers can be for example long-lived commands, like `php artisan queue:work` commands or `php artisan horizon` that run in separate processes, other the web workers that serve HTTP content.
 
 To deploy such workload, check the [Worker Chart](https://github.com/renoki-co/charts/tree/master/charts/laravel-worker) that will ease the job for you.
+
+### 🌐 WebSocket Server Support
+
+The chart includes support for deploying WebSocket servers (like Laravel Reverb) for real-time communication. This is disabled by default but can be enabled by setting `websocket.enabled` and `worker.websocket.enabled` to `true` in your values file.
+
+```yaml
+websocket:
+  enabled: true
+  app:
+    id: "my-app-id"
+    key: "my-app-key" 
+    secret: "my-app-secret"
+  ingress:
+    enabled: true
+    hosts:
+      - host: ws.example.com
+        paths:
+          - path: /app
+            pathType: ImplementationSpecific
+          - path: /apps
+            pathType: ImplementationSpecific
+
+worker:
+  websocket:
+    enabled: true
+    replicaCount: 1
+```
+
+The WebSocket server includes:
+- Dedicated service for WebSocket connections on port 8080
+- Ingress configuration with WebSocket upgrade headers
+- Health checks via TCP probes
+- Horizontal pod autoscaling support
+- Redis-based scaling for multiple WebSocket server instances
+
+#### Environment Variables for WebSocket
+
+The WebSocket server requires specific environment variables. These are automatically configured when using the chart:
+
+- `REVERB_APP_ID`: Application ID for WebSocket authentication
+- `REVERB_APP_KEY`: Application key for WebSocket authentication  
+- `REVERB_APP_SECRET`: Application secret for WebSocket authentication
+- `REVERB_HOST`: Host for the WebSocket server to bind to
+- `REVERB_PORT`: Port for the WebSocket server to listen on
+- `REVERB_SCHEME`: Protocol scheme (http/https)
+
+For horizontal scaling with Redis, enable `websocket.scaling.enabled` and ensure your Laravel application is configured with a Redis connection.
+
+#### Example Configuration
+
+See `examples/websocket-values.yaml` for a complete example of how to configure a Laravel application with WebSocket server support. This example includes:
+
+- WebSocket server configuration with ingress
+- Proper environment variables for Laravel Reverb
+- Health checks and autoscaling
+- Redis-based horizontal scaling
+- Both WebSocket and regular queue workers
+
+To use this example:
+
+```bash
+helm upgrade my-laravel-app renoki-co/larakube \
+  --values examples/websocket-values.yaml \
+  --set image.repository=your-laravel-app \
+  --set image.tag=latest
+```
 
 ## 📡 Monitoring
 

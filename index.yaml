@@ -3,9 +3,9 @@ entries:
   golang:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-05-28T22:18:08.23267+08:00"
+    created: "2025-06-08T17:15:03.852942+08:00"
     description: A Helm chart for Golang applications
-    digest: 042140efb2f4011029f894ae82d0712bf2be373eb36bf39b54714d23e305ed58
+    digest: 4219abb7a141a4bda91ee60670f42abea200072746699a923527f6a9df5e849a
     home: https://github.com/vortechron/the-captain-charts
     icon: https://go.dev/images/go-logo-blue.svg
     keywords:
@@ -26,7 +26,18 @@ entries:
   larakube:
   - apiVersion: v2
     appVersion: 8.0.0
-    created: "2025-05-28T22:18:08.233234+08:00"
+    created: "2025-06-08T17:15:03.854463+08:00"
+    description: Helm chart scaffolding for Laravel applications with WebSocket server
+      support.
+    digest: 955573382127ab453cbd9c92c287e2d84f08a4c1309cfd3766362d3e1feee243
+    name: larakube
+    type: application
+    urls:
+    - larakube-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v2
+    appVersion: 8.0.0
+    created: "2025-06-08T17:15:03.853712+08:00"
     description: Helm chart scaffolding for Laravel applications.
     digest: e9d9f58dceddea45072c8c03494c895de6d5159c69e3c008e4f9c1e4ee543517
     name: larakube
@@ -37,7 +48,7 @@ entries:
   laravel:
   - apiVersion: v2
     appVersion: 8.0.0
-    created: "2025-05-28T22:18:08.233879+08:00"
+    created: "2025-06-08T17:15:03.855091+08:00"
     description: Helm chart scaffolding for Laravel applications.
     digest: a3405d1bad02f65ccc989908dba88667019aa38a8aed212891ab3b1038608bcd
     name: laravel
@@ -48,9 +59,9 @@ entries:
   laravel-octane:
   - apiVersion: v2
     appVersion: 8.0.0
-    created: "2025-05-28T22:18:08.234624+08:00"
+    created: "2025-06-08T17:15:03.856198+08:00"
     description: Helm chart scaffolding for Octane-based Laravel applications.
-    digest: cd70502c44f0c1372c1a895896a103cfde122ee42c25aef00ca22746057f4710
+    digest: 82184b3dd9c831598671ef9510f727b69969887b4e57cbbc27c0549916f68513
     name: laravel-octane
     type: application
     urls:
@@ -59,12 +70,12 @@ entries:
   laravel-worker:
   - apiVersion: v2
     appVersion: 8.0.0
-    created: "2025-05-28T22:18:08.235229+08:00"
+    created: "2025-06-08T17:15:03.856847+08:00"
     description: Helm chart scaffolding for additional Laravel worker applications.
-    digest: 64777e8318bf4fa554c5dbba3bc6b1092084cdd69fc8188b62d059079756a2b4
+    digest: cbc1dd489bbc56efdc1c5786d12a1e376485fed712691fafe03f6294b622ca84
     name: laravel-worker
     type: application
     urls:
     - laravel-worker-1.0.0.tgz
     version: 1.0.0
-generated: "2025-05-28T22:18:08.231924+08:00"
+generated: "2025-06-08T17:15:03.852416+08:00"

@@ -1,0 +1,212 @@
+# Example values.yaml for Laravel application with WebSocket server support
+# This example shows how to configure a Laravel application with WebSocket (Reverb-like) functionality
+
+# Application image configuration
+image:
+  repository: "your-laravel-app"
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+# Basic environment variables for the application
+env:
+  APP_ENV: "production"
+  APP_DEBUG: "false"
+  LOG_CHANNEL: "stderr"
+  CACHE_DRIVER: "redis"
+  SESSION_DRIVER: "redis"
+  QUEUE_CONNECTION: "redis"
+  BROADCAST_DRIVER: "reverb"
+
+# Enable WebSocket server functionality
+websocket:
+  enabled: true
+  
+  # WebSocket application credentials (should match your Laravel .env configuration)
+  app:
+    id: "my-laravel-app"
+    key: "my-app-key-12345"
+    secret: "my-secret-key-67890"
+  
+  # Server configuration
+  server:
+    host: "0.0.0.0"
+    port: 8080
+  
+  # Allow connections from any origin (configure as needed for security)
+  allowedOrigins:
+    - "https://yourdomain.com"
+    - "https://www.yourdomain.com"
+    # - "*"  # Use for development only
+  
+  # Service configuration for WebSocket server
+  service:
+    type: ClusterIP
+    port: 8080
+    annotations: {}
+  
+  # Ingress for WebSocket connections
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    hosts:
+      - host: ws.yourdomain.com
+        paths:
+          - path: /app
+            pathType: ImplementationSpecific
+          - path: /apps
+            pathType: ImplementationSpecific
+    tls:
+      - secretName: websocket-tls
+        hosts:
+          - ws.yourdomain.com
+  
+  # Enable Redis scaling for multiple WebSocket instances
+  scaling:
+    enabled: true
+
+# Web application configuration
+web:
+  replicaCount: 2
+  
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70
+  
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+# Worker configurations
+worker:
+  # Enable WebSocket server worker
+  websocket:
+    enabled: true
+    replicaCount: 2
+    
+    # WebSocket server will be started with these parameters
+    command:
+      - php
+      - artisan
+      - reverb:start
+      - --host=0.0.0.0
+      - --port=8080
+    
+    # Environment variables specific to WebSocket worker
+    env:
+      REVERB_APP_ID: "my-laravel-app"
+      REVERB_APP_KEY: "my-app-key-12345" 
+      REVERB_APP_SECRET: "my-secret-key-67890"
+      REVERB_HOST: "0.0.0.0"
+      REVERB_PORT: "8080"
+      REVERB_SCHEME: "http"
+      REVERB_SCALING_ENABLED: "true"
+    
+    containerPort: 8080
+    
+    autoscaling:
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 5
+      targetCPUUtilizationPercentage: 80
+    
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+    
+    # Health checks for WebSocket server
+    livenessProbe:
+      tcpSocket:
+        port: 8080
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+    
+    readinessProbe:
+      tcpSocket:
+        port: 8080
+      initialDelaySeconds: 5
+      periodSeconds: 5
+      timeoutSeconds: 3
+  
+  # Standard queue worker example
+  default:
+    enabled: true
+    replicaCount: 1
+    
+    command:
+      - php
+      - artisan
+      - queue:work
+      - --sleep=3
+      - --tries=3
+      - --max-time=3600
+    
+    env:
+      QUEUE_CONNECTION: "redis"
+    
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+
+# Enable database migrations
+databaseMigration:
+  enabled: true
+  retry: 3
+  
+# Enable scheduler for Laravel tasks
+scheduler:
+  enabled: true
+  schedule: "* * * * *"
+  
+# Regular HTTP ingress for the web application
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  hosts:
+    - host: yourdomain.com
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: app-tls
+      hosts:
+        - yourdomain.com
+
+# Service configuration for the web application
+service:
+  type: ClusterIP
+  port: 80
+  containerPort: 8000
+
+# Secret environment variables (create these secrets separately)
+secretEnvs:
+  - name: DB_PASSWORD
+    secretName: laravel-secrets
+    secretKey: database-password
+  - name: REDIS_PASSWORD  
+    secretName: laravel-secrets
+    secretKey: redis-password
+  - name: APP_KEY
+    secretName: laravel-secrets
+    secretKey: app-key 
