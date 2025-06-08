@@ -137,15 +137,6 @@ websocket:
   # -- Enable or disable the WebSocket server.
   enabled: false
 
-  # -- WebSocket server application credentials.
-  app:
-    # -- Application ID for WebSocket authentication.
-    id: "my-app-id"
-    # -- Application key for WebSocket authentication.
-    key: "my-app-key"
-    # -- Application secret for WebSocket authentication.
-    secret: "my-app-secret"
-
   # -- Host and port configuration for the WebSocket server.
   server:
     # -- Host for the WebSocket server to bind to.
@@ -407,17 +398,9 @@ worker:
       - php
       - artisan
       - reverb:start
-      - --host={{ .Values.websocket.server.host }}
-      - --port={{ .Values.websocket.server.port }}
 
     # -- Environment variables specific to the WebSocket worker.
-    env:
-      REVERB_APP_ID: "{{ .Values.websocket.app.id }}"
-      REVERB_APP_KEY: "{{ .Values.websocket.app.key }}"
-      REVERB_APP_SECRET: "{{ .Values.websocket.app.secret }}"
-      REVERB_HOST: "{{ .Values.websocket.server.host }}"
-      REVERB_PORT: "{{ .Values.websocket.server.port }}"
-      REVERB_SCHEME: "http"
+    env: {}
 
     # -- Container port for WebSocket server.
     containerPort: 8080
