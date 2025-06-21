@@ -51,9 +51,9 @@ spec:
           {{- end }}
           {{- if $value.containerPort }}
           ports:
-            - name: websocket
+            - name: {{ $value.portName | default "http" }}
               containerPort: {{ $value.containerPort }}
-              protocol: TCP
+              protocol: {{ $value.protocol | default "TCP" }}
           {{- end }}
           env:
             # TODO: check if there are any envs

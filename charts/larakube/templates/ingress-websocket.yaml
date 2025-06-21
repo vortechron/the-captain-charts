@@ -1,6 +1,6 @@
-{{- if and .Values.websocket.enabled .Values.websocket.ingress.enabled -}}
+{{- if and .Values.websocket.enabled .Values.websocket.ingress.enabled (index .Values.worker "websocket").enabled (index .Values.worker "websocket").service -}}
 {{- $fullName := include "larakube.fullname" . -}}
-{{- $svcPort := .Values.websocket.service.port -}}
+{{- $svcPort := (index .Values.worker "websocket").service.port -}}
 {{- if and .Values.websocket.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
   {{- if not (hasKey .Values.websocket.ingress.annotations "kubernetes.io/ingress.class") }}
   {{- $_ := set .Values.websocket.ingress.annotations "kubernetes.io/ingress.class" .Values.websocket.ingress.className}}
@@ -22,7 +22,7 @@ metadata:
     # WebSocket specific annotations
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-    nginx.ingress.kubernetes.io/websocket-services: "{{ $fullName }}-websocket"
+    nginx.ingress.kubernetes.io/websocket-services: "{{ $fullName }}-worker-websocket"
     {{- with .Values.websocket.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -53,11 +53,11 @@ spec:
             backend:
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
-                name: {{ $fullName }}-websocket
+                name: {{ $fullName }}-worker-websocket
                 port:
                   number: {{ $svcPort }}
               {{- else }}
-              serviceName: {{ $fullName }}-websocket
+              serviceName: {{ $fullName }}-worker-websocket
               servicePort: {{ $svcPort }}
               {{- end }}
           {{- end }}

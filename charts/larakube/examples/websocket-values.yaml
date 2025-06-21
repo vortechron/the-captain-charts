@@ -112,6 +112,16 @@ worker:
       REVERB_SCALING_ENABLED: "true"
     
     containerPort: 8080
+    portName: "websocket"
+    protocol: "TCP"
+    
+    # Service configuration for the WebSocket worker
+    service:
+      type: ClusterIP
+      port: 8080
+      protocol: "TCP"
+      name: "websocket"
+      annotations: {}
     
     autoscaling:
       enabled: true

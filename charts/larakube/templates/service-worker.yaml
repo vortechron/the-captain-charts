@@ -1,0 +1,26 @@
+{{- range $i, $value := .Values.worker }}
+{{- if and $value.enabled $value.service }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "larakube.fullname" $ }}-worker-{{ $i }}
+  labels:
+    {{- include "larakube.labels" $ | nindent 4 }}
+    app.kubernetes.io/component: worker-{{ $i }}
+  {{- with $value.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ $value.service.type | default "ClusterIP" }}
+  ports:
+    - port: {{ $value.service.port }}
+      targetPort: {{ $value.containerPort }}
+      protocol: {{ $value.service.protocol | default "TCP" }}
+      name: {{ $value.service.name | default $i }}
+  selector:
+    {{- include "larakube.selectorLabels" $ | nindent 4 }}
+    app.kubernetes.io/component: worker-{{ $i }}
+{{- end }}
+{{- end }}

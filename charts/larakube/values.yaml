@@ -133,29 +133,10 @@ env: {}
 secretEnvs: []
 
 # -- WebSocket server configuration for real-time communication.
+# This is now deprecated. Configure WebSocket via worker.websocket.service instead.
 websocket:
   # -- Enable or disable the WebSocket server.
   enabled: false
-
-  # -- Host and port configuration for the WebSocket server.
-  server:
-    # -- Host for the WebSocket server to bind to.
-    host: "0.0.0.0"
-    # -- Port for the WebSocket server to listen on.
-    port: 8080
-
-  # -- Allowed origins for WebSocket connections (use '*' for all origins).
-  allowedOrigins:
-    - "*"
-
-  # -- Service configuration for the WebSocket server.
-  service:
-    # -- The type of service for WebSocket server.
-    type: ClusterIP
-    # -- The port on which the WebSocket service will be exposed.
-    port: 8080
-    # -- Annotations to add to the WebSocket service.
-    annotations: {}
 
   # -- Ingress configuration for WebSocket connections.
   ingress:
@@ -405,6 +386,25 @@ worker:
     # -- Container port for WebSocket server.
     containerPort: 8080
 
+    # -- Port name for the container port.
+    portName: "websocket"
+
+    # -- Protocol for the container port.
+    protocol: "TCP"
+
+    # -- Service configuration for the WebSocket worker.
+    service:
+      # -- Service type.
+      type: ClusterIP
+      # -- Service port.
+      port: 8080
+      # -- Service protocol.
+      protocol: "TCP"
+      # -- Service port name.
+      name: "websocket"
+      # -- Service annotations.
+      annotations: {}
+
     # -- Autoscaling configuration for the WebSocket worker.
     autoscaling:
       # -- Enable or disable autoscaling for the WebSocket worker.
@@ -467,6 +467,26 @@ worker:
       - artisan
       - queue:work
 
+    # -- Environment variables specific to the worker container.
+    env: { }
+
+    # -- Container port (optional - only if worker needs to expose a port).
+    # containerPort: 8080
+
+    # -- Port name for the container port (optional).
+    # portName: "http"
+
+    # -- Protocol for the container port (optional).
+    # protocol: "TCP"
+
+    # -- Service configuration (optional - only if worker needs a service).
+    # service:
+    #   type: ClusterIP
+    #   port: 8080
+    #   protocol: "TCP"
+    #   name: "http"
+    #   annotations: {}
+
     # -- Autoscaling configuration for the worker deployment.
     autoscaling:
 
@@ -482,9 +502,6 @@ worker:
       # -- The target CPU utilization percentage for autoscaling.
       targetCPUUtilizationPercentage: 80
       # targetMemoryUtilizationPercentage: 80
-
-    # -- Environment variables specific to the worker container.
-    env: { }
 
     # -- Resource requests and limits for the worker container.
     resources: { }
