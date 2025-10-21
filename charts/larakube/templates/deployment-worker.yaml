@@ -11,8 +11,8 @@ spec:
   {{- if not $value.autoscaling.enabled }}
   replicas: {{ $value.replicaCount }}
   {{- end }}
-  {{- if $.Values.updateStrategy }}
-  strategy: {{- toYaml $.Values.updateStrategy | nindent 4 }}
+  {{- if $value.updateStrategy }}
+  strategy: {{- toYaml $value.updateStrategy | nindent 4 }}
   {{- end }}
   revisionHistoryLimit: {{ $.Values.revisionHistoryLimit }}
   selector:

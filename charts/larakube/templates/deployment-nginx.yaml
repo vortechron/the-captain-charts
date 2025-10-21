@@ -8,6 +8,10 @@ metadata:
     app.kubernetes.io/component: nginx
 spec:
   replicas: {{ .Values.nginx.replicaCount }}
+  {{- if .Values.nginx.updateStrategy }}
+  strategy: {{- toYaml .Values.nginx.updateStrategy | nindent 4 }}
+  {{- end }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
   selector:
     matchLabels:
       {{- include "larakube.selectorLabels" . | nindent 6 }}

@@ -331,6 +331,17 @@ nginx:
     #   cpu: 100m
     #   memory: 128Mi
   
+  # -- Update strategy for the Nginx deployment.
+  updateStrategy:
+    # -- The update strategy for the Nginx deployment (e.g., RollingUpdate, Recreate).
+    type: RollingUpdate
+    # -- Rolling update configuration for Nginx.
+    rollingUpdate:
+      # -- The maximum number of pods that can be created above the desired number of pods during an update.
+      maxSurge: 1
+      # -- The maximum number of pods that can be unavailable during an update.
+      maxUnavailable: 0
+  
   # -- Configuration for Nginx.
   config:
     # -- Custom Nginx configuration for the reverse proxy.
