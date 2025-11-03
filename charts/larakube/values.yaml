@@ -548,8 +548,89 @@ worker:
       # -- Enable or disable the PodDisruptionBudget for the worker deployment.
       enabled: false
 
+    # -- The maximum number of pods that can be unavailable during a disruption.
+    #minAvailable: 1
+    maxUnavailable: 0
+
+  # -- SSR (Server-Side Rendering) worker configuration.
+  ssr:
+    # -- Enable or disable the SSR worker.
+    enabled: false
+
+    # -- The number of replicas for the SSR worker deployment.
+    replicaCount: 1
+
+    # -- Image configuration for the SSR worker.
+    image:
+      # -- The Docker image repository for the SSR worker.
+      repository: ""
+      # -- The Docker image tag for the SSR worker.
+      tag: ""
+      # -- The policy for pulling the Docker image (e.g., IfNotPresent, Always).
+      pullPolicy: IfNotPresent
+
+    # -- Command to run for the SSR worker (empty to use Dockerfile CMD).
+    command: []
+
+    # -- Environment variables specific to the SSR worker container.
+    env: {}
+
+    # -- Container port (optional - only if SSR worker needs to expose a port).
+    # containerPort: 3000
+
+    # -- Port name for the container port (optional).
+    # portName: "http"
+
+    # -- Protocol for the container port (optional).
+    # protocol: "TCP"
+
+    # -- Service configuration (optional - only if SSR worker needs a service).
+    # service:
+    #   type: ClusterIP
+    #   port: 3000
+    #   protocol: "TCP"
+    #   name: "http"
+    #   annotations: {}
+
+    # -- Autoscaling configuration for the SSR worker deployment.
+    autoscaling:
+      # -- Enable or disable autoscaling for the SSR worker deployment.
+      enabled: false
+      # -- The minimum number of replicas for autoscaling.
+      minReplicas: 1
+      # -- The maximum number of replicas for autoscaling.
+      maxReplicas: 10
+      # -- The target CPU utilization percentage for autoscaling.
+      targetCPUUtilizationPercentage: 80
+
+    # -- Resource requests and limits for the SSR worker container.
+    resources: {}
+      # limits:
+      #   cpu: 500m
+      #   memory: 512Mi
+      # requests:
+      #   cpu: 250m
+      #   memory: 256Mi
+
+    # -- Update strategy for the SSR worker deployment.
+    updateStrategy:
+      # -- The update strategy for the SSR worker deployment (e.g., RollingUpdate, Recreate).
+      type: RollingUpdate
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 0
+
+    # -- Liveness probe configuration for the SSR worker container.
+    livenessProbe: {}
+
+    # -- Readiness probe configuration for the SSR worker container.
+    readinessProbe: {}
+
+    # -- PodDisruptionBudget configuration for the SSR worker deployment.
+    pdb:
+      # -- Enable or disable the PodDisruptionBudget for the SSR worker deployment.
+      enabled: false
       # -- The maximum number of pods that can be unavailable during a disruption.
-      #minAvailable: 1
       maxUnavailable: 0
 
 # -- Scheduler configuration.
