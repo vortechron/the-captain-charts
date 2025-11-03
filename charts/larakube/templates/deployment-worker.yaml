@@ -43,8 +43,12 @@ spec:
         - name: {{ $.Chart.Name }}
           securityContext:
             {{- toYaml $.Values.securityContext | nindent 12 }}
-          {{- if and $value.image $value.image.repository }}
-          image: "{{ $value.image.repository }}:{{ $value.image.tag | default $.Chart.AppVersion }}"
+          {{- $workerImageRepo := "" }}
+          {{- if $value.image }}
+          {{- $workerImageRepo = $value.image.repository | default "" }}
+          {{- end }}
+          {{- if $workerImageRepo }}
+          image: "{{ $workerImageRepo }}:{{ $value.image.tag | default $.Chart.AppVersion }}"
           imagePullPolicy: {{ $value.image.pullPolicy | default $.Values.image.pullPolicy }}
           {{- else }}
           image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag | default $.Chart.AppVersion }}"
